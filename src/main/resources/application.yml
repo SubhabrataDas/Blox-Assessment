@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: blox-assessment
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:postgresql://localhost:5432/assessment
+    username: postgres
+    password: admin
+    hikari:
+      minimum-idle: 2
+    type: com.zaxxer.hikari.HikariDataSource
+
+axon:
+  serializer:
+    general: JACKSON
+
+springdoc:
+  api-docs:
+    version: OPENAPI_3_0
+  swagger-ui:
+    path: /swagger-ui.html
+
+logging:
+  level:
+    com.weareblox.assessment: DEBUG
+    io.axoniq.axonserver.AxonServer: DEBUG

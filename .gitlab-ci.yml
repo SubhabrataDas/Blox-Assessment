@@ -1,0 +1,9 @@
+image: eclipse-temurin:17-focal
+
+build:
+  stage: build
+  script: ./gradlew --build-cache  --stacktrace check assemble
+  artifacts:
+    when: always
+    reports:
+      junit: "build/test-results/test/TEST-*.xml"

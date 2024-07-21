@@ -1,0 +1,50 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
+plugins {
+    id "org.springframework.boot" version "2.7.17"
+    id "io.spring.dependency-management" version "1.1.4"
+    id "io.freefair.lombok" version "8.4"
+    id "application"
+    id 'project-report'
+}
+
+sourceCompatibility = 17
+targetCompatibility = 17
+
+repositories {
+    mavenCentral()
+}
+
+application {
+    mainClass.set("com.weareblox.assessment.Application")
+}
+
+test {
+    useJUnitPlatform()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.axonframework:axon-bom:4.6.1"
+        mavenBom SpringBootPlugin.BOM_COORDINATES
+    }
+}
+
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-webflux"
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "org.springframework.boot:spring-boot-starter-validation"
+    implementation "org.axonframework:axon-spring-boot-starter"
+    
+    implementation "org.springdoc:springdoc-openapi-webflux-ui:1.7.0"
+    
+    implementation "org.postgresql:postgresql"
+
+    testImplementation "org.junit.jupiter:junit-jupiter"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.axonframework:axon-test"
+    
+    //needed for eclipse
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}

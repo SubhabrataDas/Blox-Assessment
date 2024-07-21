@@ -1,0 +1,24 @@
+version: '3.9'
+
+services:
+  axonserver:
+    image: axoniq/axonserver:4.6.0-dev
+    hostname: axonserver
+    volumes:
+      - ./data/axon/data:/data
+      - ./data/axon/events:/events
+    ports:
+      - "8024:8024"
+      - "8124:8124"
+
+  postgres:
+    image: postgres:14.10-alpine
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_PASSWORD=postgres"
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
