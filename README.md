@@ -11,4 +11,11 @@ The record of the transactions are stored in a ledger which shows the money paye
 
 1. Please perform the following steps as mentioned below
 
+ ```
+   $ git clone git clone https://github.com/SubhabrataDas/blox-assessment.git
+   $ cd blox-assessment
+   $ gradle build
+   $ java -jar .\build\libs\blox-assessment.jar
+
+  ```
 
