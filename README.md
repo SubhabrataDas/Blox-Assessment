@@ -57,7 +57,8 @@ The UI is package inside the Spring Boot app. A WebFluxConfigurer has been added
    This process is synchronised using a [Saga Manager](https://docs.axoniq.io/reference-guide/v/3.1/part-ii-domain-logic/sagas). This takes care also of reverting the coins back to the
    previous state in case validations fail. The orders can be checked in the [order page](http://localhost:8080/order-status) page
 
-5. Finally customer can go to the ledger and check the transactions done by the customer. This provides a summary of the transactions and the final state of the payments. This also tracks the number of
-   coins in the customers possession. 
+5. Finally customer can go to the [Ledger](http://localhost:8080/get-customer-legder) and check the transactions done by the customer. This provides a summary of the transactions and the final state of the payments.
+   This also tracks the number of coins in the customers possession. Since the operations requires the customer id, you might be asked to go the customer screen and click login for the customer for whom the operation is done.
+   In case there is only one customer, clicking the login is not required. 
 
 
