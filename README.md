@@ -16,7 +16,7 @@ Please download the server and then start it by following steps here -[Axon Serv
 1. Please perform the following steps as mentioned below
 
  ```
-   $ git clone git clone https://github.com/SubhabrataDas/blox-assessment.git
+   $ git clone https://github.com/SubhabrataDas/blox-assessment.git
    $ cd blox-assessment
    $ gradle build
    $ java -jar .\build\libs\blox-assessment.jar
