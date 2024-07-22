@@ -41,6 +41,7 @@ The swagger for the service can be accessed here - [Swagger](http://localhost:80
 
 There is a simple user interface to see the apis in operation. This is developed in Angular. 
 The UI is packaged inside the Spring Boot app. A WebFluxConfigurer has been added to allow the urls for the angular to be served from the server.
+The UI is reachable at http://localhost:8080/ .
 
 1. The first step is to create a customer. Since there is no login developed, there is a simple login button on the customers grid.
     This impersonates a login and sets the customer id as the logged identifier
