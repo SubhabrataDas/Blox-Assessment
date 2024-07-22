@@ -1,12 +1,13 @@
 package com.weareblox.assessment.controller;
 
+import static org.axonframework.messaging.responsetypes.ResponseTypes.instanceOf;
 import static org.axonframework.messaging.responsetypes.ResponseTypes.multipleInstancesOf;
-import static reactor.core.publisher.Flux.defer;
 
 import java.util.List;
 
 import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +22,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 /**
@@ -56,20 +58,19 @@ public class LedgerController {
    			  		+ "Returns a mono to subscribe for updates.")
    			  
    			  })
-       @GetMapping("/subscribe")
-       public Mono<List<Ledger>> getLedgerSubscription(@RequestParam(name= "customerId", required = false) String customerId) {
+       @GetMapping(path = "/subscribe",produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+       public Flux<Ledger> getLedgerSubscription(
+    		   @RequestParam(name= "customerId", required = true) String customerId){
          
        	var queryResult = queryGateway.subscriptionQuery(
                    new FindLedgerQueryByCustomer(customerId),
                    multipleInstancesOf(Ledger.class),
-                   multipleInstancesOf(Ledger.class));
+                   instanceOf(Ledger.class));
 
-           
-           return queryResult.initialResult()
-                   .concatWith(defer(queryResult::updates))
-                   .flatMap(Mono::justOrEmpty)
-                   .next()
-                   .doFinally(unused -> queryResult.cancel());
+        return queryResult.initialResult()
+                .flatMapMany(Flux::fromIterable)
+                .concatWith(queryResult.updates())
+                .doFinally(signal -> queryResult.close());
        }
     
     
