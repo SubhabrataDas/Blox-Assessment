@@ -2,7 +2,6 @@ package com.weareblox.assessment;
 
 import java.io.IOException;
 
-import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;

@@ -66,19 +66,15 @@ public class LedgerAggregate {
      */
     @CommandHandler
     @CreationPolicy(AggregateCreationPolicy.CREATE_IF_MISSING)
-    private void handle(CreateLedgerCommand command) {
-    	
-    	log.debug("Ledger created command fired", command);
-    	
+    private void handle(CreateLedgerCommand command) {    	
+    	log.debug("Ledger created command fired", command); 	
     	this.ledgerId = command.getLedgerId();
     	BigDecimal openingBalance = BigDecimal.ZERO.add(this.currentBalance!=null
     										?this.currentBalance:BigDecimal.ZERO);
     	int currentCoinBalance = this.coinStore.get(command.getCoinId())!=null?
     								this.coinStore.get(command.getCoinId()):0;
-    	System.out.println("Leader created command "+ currentCoinBalance);
-    	
-    	currentCoinBalance = calculateCoinBalance(command.getType(), command.getAmount(), currentCoinBalance);
-    	
+    	currentCoinBalance = calculateCoinBalance(command.getType(), command.getAmount(),
+    			currentCoinBalance);  	
     	if(currentCoinBalance < 0) {
     		log.debug("Ledger failed command fired", command);
     		apply(LedgerCreateFailedEvent.
@@ -122,7 +118,6 @@ public class LedgerAggregate {
         	this.payment =  BigDecimal.ZERO;
         }
         Integer coinBalance = coinStore.get(event.getCoinId());
-        System.out.println("Leader created event entry "+ coinBalance);
         if(event.getType().equals(TransactionType.BUY)) {   	
         	coinStore.put(event.getCoinId(), (coinBalance==null?0:coinBalance) + event.getCoinAmount()); 	
         	this.currentBalance = this.currentBalance.subtract(event.getPayment().add(event.getCommision()));
@@ -132,7 +127,6 @@ public class LedgerAggregate {
         	this.currentBalance = this.currentBalance.add(event.getPayment()).subtract(event.getCommision());
         }
         log.debug("Ledger created event exited", event);
-        System.out.println("Leader created event exit "+ coinBalance);
     }
     
     /**

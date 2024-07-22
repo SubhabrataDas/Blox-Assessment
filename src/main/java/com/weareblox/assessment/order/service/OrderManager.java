@@ -62,7 +62,6 @@ public class OrderManager {
 		log.debug("Starting the Order creation Saga ", orderCreatedEvent.getOrderId());
 		
 		String coinId = orderCreatedEvent.getCoinId();
-		System.out.println("Saga invoked");
 
 		// associate Saga
 		SagaLifecycle.associateWith("orderId", orderCreatedEvent.getOrderId());

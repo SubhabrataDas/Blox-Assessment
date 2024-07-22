@@ -66,7 +66,6 @@ public class CoinAggregate {
 	@CommandHandler
     private void handle(AddCoinCommand command) {
 		log.debug("Add coin command fired",command);
-		System.out.println("Add coin command entry " +this.balance);
 		coinId = command.getCoinId();
         apply(new CoinAddedEvent(command.getCoinId(),
         		command.getQuantity(),command.getOrderId(),command.isRevert()));
@@ -79,7 +78,6 @@ public class CoinAggregate {
 	@CommandHandler
 	private void handle(RemoveCoinCommand command) {
 		log.debug("Remove coin command fired",command);
-		System.out.println("Remove coin command entry " + this.balance);
 		if ((this.balance - command.getQuantity()) < 0) {
 			apply(new CoinRemovedEvent(command.getCoinid(), 0, 
 					command.getOrderId(),
@@ -111,10 +109,8 @@ public class CoinAggregate {
     @EventSourcingHandler
     private void on(CoinRemovedEvent event) {
     	log.debug("Remove coin event fired",event);
-    	System.out.println("coin removed event entry " +this.balance + " quantity :: "+event.getQuantity());
         this.coinId = event.getCoinId();
         this.balance = this.balance - event.getQuantity();
-    	System.out.println("coin removed event exit " +this.balance + " quantity :: "+event.getQuantity());
     }
     
     /**
@@ -136,11 +132,9 @@ public class CoinAggregate {
     @EventSourcingHandler
     private void on(CoinRegisteredEvent event) {
     	log.debug("Register coin event fired",event);
-    	System.out.println("coin registered event entry" +this.balance);
         this.coinId = event.getCoinId();
         this.balance = event.getBalance();
-        this.price = event.getPrice();
-    	System.out.println("coin registered event EXIT" +this.balance);    
+        this.price = event.getPrice();  
     }
     
     
@@ -151,11 +145,8 @@ public class CoinAggregate {
     @EventSourcingHandler
     private void on(CoinAddedEvent event) {
     	log.debug("Add coin event fired",event);
-    	System.out.println("coin added event entry " +this.balance + " quantity :: "+event.getQuantity());
-    	System.out.println(event.getCoinId());
         this.coinId = event.getCoinId();
         this.balance = this.balance + event.getQuantity();
-        System.out.println("coin added event exit " +this.balance + " quantity :: "+event.getQuantity());
     }
    
     
