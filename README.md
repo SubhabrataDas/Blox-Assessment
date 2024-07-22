@@ -71,5 +71,6 @@ The UI is reachable at http://localhost:8080/ .
 6. Finally customer can go to the [Ledger](http://localhost:8080/get-customer-legder) and check the transactions done by the customer. This provides a summary of the transactions and the final state of the payments.
    This also tracks the number of coins in the customers possession. Since the operations requires the customer id, you might be asked to go the customer screen and click login for the customer for whom the operation is done. 
 
-![Ledger](https://github.com/user-attachments/assets/3096fe49-a4d3-47b8-8e2b-4a22ec8066a5)
+![Ledger](https://github.com/user-attachments/assets/f2ee94bf-41e4-4635-87c4-c5772132fa5c)
+
 
