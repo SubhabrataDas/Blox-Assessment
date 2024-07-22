@@ -18,7 +18,7 @@ public class MyAppWebMvcConfigurer  implements WebFluxConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/{path:(?!static$)[^.]*}/**")
-            .addResourceLocations("classpath:/public/")
+            .addResourceLocations("classpath:/static/")
             .resourceChain(true)
             .addResolver(new PathResourceResolver() {
                 @Override
@@ -27,7 +27,7 @@ public class MyAppWebMvcConfigurer  implements WebFluxConfigurer {
 					try {
 						requestedResource = location.createRelative(resourcePath);
 						 return requestedResource.exists() && requestedResource.isReadable() ? 
-		                    		Mono.just(requestedResource) : Mono.just(new ClassPathResource("/public/index.html"));
+		                    		Mono.just(requestedResource) : Mono.just(new ClassPathResource("/static/index.html"));
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

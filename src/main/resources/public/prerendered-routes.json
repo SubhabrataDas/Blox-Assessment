@@ -1,9 +1,0 @@
-{
-  "routes": [
-    "/coin-add-page",
-    "/coin-page",
-    "/get-customer-legder",
-    "/get-customers",
-    "/order-status"
-  ]
-}

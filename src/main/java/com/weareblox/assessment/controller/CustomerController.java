@@ -6,8 +6,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,7 +45,6 @@ public class CustomerController {
 	 * @param customer Customer to create
 	 * @return
 	 */
-	@CrossOrigin(origins = "http://localhost:4200")
 	@Operation(summary = "Create a customer.")
 	@ApiResponses(value = { 
 			  @ApiResponse(responseCode = "200", description = "Returns the created customer")
@@ -58,7 +55,6 @@ public class CustomerController {
 		return customerService.createCustomer(customer);
 	}
 	
-	@CrossOrigin(origins = "http://localhost:4200")
 	@Operation(summary = "Get all customers in the system")
 	@ApiResponses(value = { 
 			  @ApiResponse(responseCode = "200", description = "Returns the customers")
@@ -68,7 +64,7 @@ public class CustomerController {
 		return customerService.getCustomers();
 	}
 	
-	@CrossOrigin(origins = "http://localhost:4200")
+
 	@Operation(summary = "Gets an order with id")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Returns Order for customers") })
 	@GetMapping("/{id}/orders")

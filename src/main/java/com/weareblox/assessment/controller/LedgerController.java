@@ -5,10 +5,8 @@ import static reactor.core.publisher.Flux.defer;
 
 import java.util.List;
 
-import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.weareblox.assessment.ledger.api.query.FindLedgerQueryByCustomer;
 import com.weareblox.assessment.ledger.dto.Ledger;
-import com.weareblox.assessment.ledger.jpa.LedgerEntityProjection;
 import com.weareblox.assessment.ledger.service.LedgerService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -36,11 +33,10 @@ import reactor.core.publisher.Mono;
         path = "/ledger")
 public class LedgerController {
 
-    private final CommandGateway commandGateway;
     private final QueryGateway queryGateway;
     @Autowired LedgerService ledgerService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
+
     @Operation(summary = "Gets the ledger in the system for a perticular customer")
 	@ApiResponses(value = { 
 			  @ApiResponse(responseCode = "200", description = "Returns the ledgers in the system"

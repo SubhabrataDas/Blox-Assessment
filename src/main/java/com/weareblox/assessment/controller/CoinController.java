@@ -1,15 +1,9 @@
 package com.weareblox.assessment.controller;
 
-import java.time.Duration;
-
 import javax.validation.Valid;
 
-import org.axonframework.messaging.responsetypes.ResponseTypes;
-import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.weareblox.assessment.coin.api.query.FindCoinQuery;
 import com.weareblox.assessment.coin.dto.Coin;
 import com.weareblox.assessment.coin.dto.CoinPatch;
 import com.weareblox.assessment.coin.service.CoinService;
@@ -36,7 +29,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Schedulers;
 
 @Slf4j
 @RestController
@@ -47,7 +39,6 @@ public class CoinController {
 	@Autowired
 	private CoinService coinService;
 
-	@CrossOrigin(origins = "http://localhost:4200")
 	@Operation(summary = "Registers a coin in the system")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "201", description = "The coin has been successfully registered in the system. "
@@ -61,7 +52,6 @@ public class CoinController {
 		return Mono.fromFuture(coinService.registerCoin(coin));
 	}
 
-	@CrossOrigin(origins = "http://localhost:4200")
 	@Operation(summary = "Gets all the coins in the system")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Returns the coins in the system") })
 	@GetMapping()
@@ -70,7 +60,6 @@ public class CoinController {
 		return Flux.fromIterable(coinService.getCoins(pageIndex, pageSize));
 	}
 
-	@CrossOrigin(origins = "http://localhost:4200")
 	@Operation(summary = "Update the price or add more coins")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Returns the coins in the system") })
 	@PatchMapping("/{id}")
@@ -84,9 +73,7 @@ public class CoinController {
 		throw new IllegalArgumentException("Other attributes of coins are not patchable");
 	}
 
-	@CrossOrigin(origins = "http://localhost:4200")
-	@Operation(summary = "Returns details of a coin. This returns a flux. "
-			+ "Thus the client can register and get updated ")
+	@Operation(summary = "Returns details of a coin ")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Returns the price of the coin") })
 	@GetMapping(path = "/{id}")
 	public Coin getCoinUpates(@Parameter(description = "Id of the coin") @PathVariable("id") String id) {
